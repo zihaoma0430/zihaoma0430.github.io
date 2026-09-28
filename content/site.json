@@ -1,0 +1,63 @@
+{
+  "profile": {
+    "name": "Zihao Ma",
+    "tagline": "Research · Engineering · Product",
+    "avatar": "assets/images/avatar.svg",
+    "avatar_alt": "ZM initials; profile photo to be added",
+    "affiliation": "个人信息待补充",
+    "email": "",
+    "github": "https://github.com/zihaoma0430",
+    "scholar": "",
+    "bio": [
+      "欢迎来到我的个人主页。这里将记录我在研究、工程与产品方面的工作与思考。",
+      "你可以通过 Research、Engineering 和 Product 了解各个方向的内容，也可以在下方阅读最新文章和查看论文。"
+    ],
+    "bio_note": "个人简介、教育与工作经历待补充。",
+    "interests": []
+  },
+  "posts": [
+    {
+      "slug": "research-notes",
+      "title": "研究笔记：问题、方法与思考",
+      "category": "Research",
+      "date": "",
+      "placeholder": true,
+      "summary": "研究笔记与阅读记录将在这里更新。",
+      "body": ["这是一篇用于预览主页排版的占位文章，尚未发布正式内容。", "后续将在这里记录具体的研究问题、阅读笔记、方法与实验结果。"]
+    },
+    {
+      "slug": "engineering-notes",
+      "title": "工程实践：从想法到实现",
+      "category": "Engineering",
+      "date": "",
+      "placeholder": true,
+      "summary": "工程项目、实现细节与实践记录将在这里更新。",
+      "body": ["这是一篇用于预览主页排版的占位文章，尚未发布正式内容。", "后续将在这里分享项目的设计、实现过程，以及实践中遇到的问题与解决方法。"]
+    },
+    {
+      "slug": "product-notes",
+      "title": "产品思考：从需求到体验",
+      "category": "Product",
+      "date": "",
+      "placeholder": true,
+      "summary": "产品观察、设计过程与复盘将在这里更新。",
+      "body": ["这是一篇用于预览主页排版的占位文章，尚未发布正式内容。", "后续将在这里记录用户需求、产品设计与迭代过程中的思考。"]
+    }
+  ],
+  "publications": [
+    {
+      "slug": "publication-placeholder",
+      "title": "Publication title · 论文标题待补充",
+      "authors": "作者信息待补充",
+      "venue": "会议 / 期刊与发表年份待补充",
+      "placeholder": true,
+      "image": "assets/images/publication.svg",
+      "image_alt": "Placeholder illustration of a research paper",
+      "abstract": "这里预留论文摘要。正式论文的标题、作者、发表信息、摘要及链接将在补充资料后更新。",
+      "url": "",
+      "pdf": "",
+      "code": "",
+      "bibtex": ""
+    }
+  ]
+}

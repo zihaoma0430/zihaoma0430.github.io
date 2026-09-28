@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="480" viewBox="0 0 480 480" fill="none">
+  <rect width="480" height="480" rx="240" fill="#E8EEF5"/>
+  <circle cx="240" cy="240" r="217" stroke="#D4DFEC"/>
+  <circle cx="240" cy="240" r="185" stroke="#DBE4EF"/>
+  <text x="240" y="270" text-anchor="middle" fill="#536C8B" font-family="Georgia, serif" font-size="114" letter-spacing="-5">ZM</text>
+</svg>
