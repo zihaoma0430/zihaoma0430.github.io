@@ -19,11 +19,9 @@ CATEGORIES = {
     "Engineering": "工程项目、技术实践与实现过程。",
     "Product": "产品观察、设计过程与迭代思考。",
 }
-ICONS = {
-    "github": '<path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.86c-2.78.6-3.37-1.18-3.37-1.18-.45-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.61.07-.61 1 .07 1.53 1.03 1.53 1.03.89 1.53 2.34 1.09 2.91.83.09-.65.35-1.09.64-1.34-2.22-.25-4.56-1.11-4.56-4.94 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.03A9.6 9.6 0 0 1 12 6.83c.85 0 1.71.11 2.51.34 1.91-1.3 2.75-1.03 2.75-1.03.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.84-2.34 4.69-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .27.18.58.69.48A10 10 0 0 0 12 2Z"/>',
-    "email": '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></g>',
-    "scholar": '<g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="m2 9 10-6 10 6-10 6L2 9Z"/><path d="M6 12v6c4 3 8 3 12 0v-6M22 9v9"/></g>',
-}
+SOCIALS = (("email", "Email"), ("x", "X"), ("linkedin", "LinkedIn"),
+           ("scholar", "Google Scholar"), ("xiaohongshu", "Xiaohongshu"), ("wechat", "WeChat"))
+ICON_GLYPHS = {"email": "&#xf0e0;", "x": "&#xe61b;", "linkedin": "&#xf08c;", "scholar": "&#xe9d4;"}
 
 
 def e(value):
@@ -31,7 +29,10 @@ def e(value):
 
 
 def icon(name):
-    return f'<svg class="icon" viewBox="0 0 24 24" aria-hidden="true">{ICONS[name]}</svg>'
+    if name in ICON_GLYPHS:
+        return f'<span class="icon icon-{name}" aria-hidden="true">{ICON_GLYPHS[name]}</span>'
+    svg = (ROOT / f"assets/images/social/{name}.svg").read_text(encoding="utf-8")
+    return svg.replace('<svg role="img"', '<svg class="icon" aria-hidden="true" focusable="false"', 1)
 
 
 def href(target, current):
@@ -65,9 +66,11 @@ def validate():
                 target = item.get(key)
                 if target and urlsplit(target).scheme not in ("", "https", "http"):
                     raise ValueError(f"Unsupported link: {target}")
-    for key in ("github", "scholar"):
+    for key, _ in SOCIALS:
         target = PROFILE.get(key)
-        if target and urlsplit(target).scheme not in ("https", "http"):
+        if not target or target == "#" or key == "email":
+            continue
+        if urlsplit(target).scheme not in ("https", "http"):
             raise ValueError(f"Unsupported profile link: {target}")
 
 
@@ -104,9 +107,10 @@ def write_page(current, title, body, active="Home", description=""):
 {body}
   </main>
   <footer class="site-footer">
-    <div class="container footer-inner">
-      <p>© {date.today().year} {e(PROFILE['name'])}</p>
-      <p>{e(PROFILE['tagline'])}</p>
+    <div class="container footer-inner" lang="en">
+      <p>© Copyright {date.today().year} {e(PROFILE['name'])}.
+        Design inspired by {link('https://jiaxuanzou0714.github.io/', 'jiaxuanzou0714.github.io', current)}.
+        Hosted by {link('https://pages.github.com/', 'GitHub Pages', current)}.</p>
     </div>
   </footer>
 </body>
@@ -166,24 +170,36 @@ def publications_markup(current):
 def home():
     current = "index.html"
     contacts = []
-    for key, label in (("email", "Email"), ("github", "GitHub"), ("scholar", "Scholar")):
+    for key, label in SOCIALS:
         target = PROFILE.get(key)
-        if target:
+        if not target or target == "#":
+            description = e(f"{label} — 链接待补充")
+            contacts.append(
+                f'<a class="social-link" role="link" aria-disabled="true" tabindex="0"'
+                f' aria-label="{description}" title="{description}">{icon(key)}</a>'
+            )
+        else:
             if key == "email":
-                target = f"mailto:{target}"
-            contacts.append(link(target, icon(key) + label, current))
-    pending_email = "" if PROFILE.get("email") else f'<p class="contact-pending">{icon("email")}<span>邮箱待补充</span></p>'
+                target = target if target.startswith("mailto:") else f"mailto:{target}"
+            contacts.append(link(target, icon(key), current, "social-link",
+                                 extra=f' aria-label="{e(label)}" title="{e(label)}"'))
     bio = "\n".join(f"<p>{e(paragraph)}</p>" for paragraph in PROFILE["bio"])
     if PROFILE.get("bio_note"):
         bio += f'<p class="bio-note">{e(PROFILE["bio_note"])}</p>'
-    if PROFILE.get("interests"):
-        items = "".join(f"<li>{e(item)}</li>" for item in PROFILE["interests"])
-        topics = f'<h2 lang="en">Research Interests</h2><ul class="interests">{items}</ul>'
-    else:
-        topics = '<h2 lang="en">Explore</h2><div class="topic-links">' + "".join(
-            link(path, label + '<span aria-hidden="true">↗</span>', current)
-            for label, path in NAVIGATION[1:]
-        ) + '</div>'
+    interests = "".join(f"<li>{e(item)}</li>" for item in PROFILE.get("interests", []))
+    education = "".join(
+        f'<li><p class="education-degree">{e(item["degree"])}</p>'
+        f'<p class="education-institution">{e(item["institution"])}, {e(item["years"])}</p></li>'
+        for item in PROFILE.get("education", [])
+    )
+    topics = f'''<section aria-labelledby="interests-heading" lang="en">
+          <h2 id="interests-heading">Interests</h2>
+          <ul class="interests">{interests}</ul>
+        </section>
+        <section aria-labelledby="education-heading" lang="en">
+          <h2 id="education-heading">Education</h2>
+          <ul class="education-list">{education}</ul>
+        </section>'''
     posts = "\n".join(
         f'<li class="post-row">{date_markup(post)}<div>{link(post_target(post), e(post["title"]), current)}{badge(post)}</div></li>'
         for post in sorted(DATA["posts"], key=lambda item: item.get("date", ""), reverse=True)[:8]
@@ -197,11 +213,13 @@ def home():
     <div class="intro">
       <aside class="profile" aria-label="个人信息与联系方式">
         <img class="avatar" src="{e(PROFILE['avatar'])}" alt="{e(PROFILE['avatar_alt'])}" width="230" height="230" fetchpriority="high">
-        <p class="affiliation">{e(PROFILE['affiliation'])}</p>
-        <div class="contact-links" lang="en">{''.join(contacts)}</div>
-        {pending_email}
+        <p class="affiliation" lang="en">
+          <span class="affiliation-unit">{e(PROFILE['affiliation']['unit'])}</span>
+          <span class="affiliation-place">{e(PROFILE['affiliation']['place'])}</span>
+        </p>
+        <div class="contact-links" role="group" aria-label="社交与联系方式" lang="en">{''.join(contacts)}</div>
       </aside>
-      <div class="bio">
+      <div class="bio" lang="en">
         <p class="greeting" lang="en">Hi, I’m <strong>{e(PROFILE['name'])}</strong>.</p>
         {bio}
         <div class="bio-topics">{topics}</div>

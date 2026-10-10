@@ -1,4 +1,25 @@
 /* Palette and typographic proportions inspired by jiaxuanzou0714.github.io. */
+@font-face {
+  font-family: "Social Brands";
+  src: url("../fonts/social-brands.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
+@font-face {
+  font-family: "Social Solid";
+  src: url("../fonts/social-solid.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 900;
+  font-display: block;
+}
+@font-face {
+  font-family: "Social Academicons";
+  src: url("../fonts/social-academicons.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: block;
+}
 :root {
   color-scheme: light;
   --background: #f7f9fc;
@@ -71,7 +92,7 @@ h3 { margin: 0 0 9px; font-size: 17px; font-weight: 600; }
   min-height: 58px;
   padding: 3px 1px 0;
   color: var(--text);
-  font: 15px/1.5 var(--sans);
+  font: 19px/1.5 var(--sans);
   border-bottom: 2px solid transparent;
   transition: color 150ms ease, border-color 150ms ease;
 }
@@ -90,20 +111,55 @@ h3 { margin: 0 0 9px; font-size: 17px; font-weight: 600; }
   object-fit: cover;
   box-shadow: 0 3px 12px rgba(16, 24, 40, 0.06);
 }
-.affiliation { margin: 0 0 11px; color: var(--muted); font-size: 14px; }
-.contact-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 9px 18px; }
-.contact-links a { display: inline-flex; align-items: center; gap: 7px; min-height: 36px; font: 13px/1.5 var(--sans); }
-.icon { width: 19px; height: 19px; flex-shrink: 0; }
-.contact-pending { display: flex; justify-content: center; align-items: center; gap: 7px; color: var(--muted); font: 12px/1.5 var(--sans); margin: 8px 0 0; }
-.contact-pending .icon { width: 15px; height: 15px; }
+.affiliation { margin: 0; font-family: var(--sans); line-height: 1.25; }
+.affiliation-unit { display: block; color: var(--text); font-size: 14px; font-weight: 500; }
+.affiliation-place { display: block; color: var(--muted); font-size: 12px; }
+.contact-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.65rem;
+  margin-top: 0.85rem;
+  font-size: 28px;
+  line-height: 1;
+}
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.85rem;
+  min-height: 1.85rem;
+  color: var(--text);
+  transition: color 150ms ease;
+}
+.social-link:hover { color: var(--link); text-decoration: none; }
+.social-link[aria-disabled="true"] { cursor: default; }
+.icon { display: block; flex-shrink: 0; line-height: 1; }
+.icon-email { font-family: "Social Solid"; font-weight: 900; }
+.icon-x, .icon-linkedin { font-family: "Social Brands"; font-weight: 400; }
+.icon-scholar { font-family: "Social Academicons"; font-weight: 400; }
+svg.icon { width: 1.7rem; height: 1.7rem; fill: currentColor; }
 .bio { padding-top: 2px; overflow-wrap: anywhere; }
 .greeting { margin-bottom: 18px; font-size: 19px; }
 .bio-note { color: var(--muted); font-size: 14px; }
-.bio-topics { margin-top: 25px; padding-top: 19px; border-top: 1px solid var(--divider); }
+.bio-topics {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.5fr);
+  gap: 28px;
+  margin-top: 25px;
+  padding-top: 19px;
+  border-top: 1px solid var(--divider);
+}
+.bio-topics > section { min-width: 0; }
 .bio-topics h2 { font-size: 17px; margin-bottom: 11px; letter-spacing: 0; }
-.topic-links { display: flex; flex-wrap: wrap; gap: 9px 24px; font: 14px/1.7 var(--sans); }
-.topic-links a span { display: inline-block; margin-left: 4px; font-size: 15px; }
-.interests { padding-left: 20px; margin: 0; }
+.interests { padding-left: 18px; margin: 0; font-size: 14px; }
+.interests li + li { margin-top: 7px; }
+.education-list { list-style: none; padding: 0; margin: 0; }
+.education-list li + li { margin-top: 17px; }
+.education-list p { margin: 0; font-size: 14px; line-height: 1.6; }
+.education-list .education-degree { margin-bottom: 3px; font-weight: 600; }
+.education-institution { color: var(--muted); }
 .content-section { margin-top: 47px; }
 .posts-list, .publications-list, .category-list { list-style: none; margin: 0; padding: 0; }
 .post-row { display: grid; grid-template-columns: 155px minmax(0, 1fr); gap: 24px; padding: 8px 0; align-items: baseline; }
@@ -120,10 +176,22 @@ h3 { margin: 0 0 9px; font-size: 17px; font-weight: 600; }
 .publication-links { display: flex; flex-wrap: wrap; align-items: start; gap: 8px; margin-top: 11px; }
 .small-link { display: inline-block; padding: 2px 10px; border: 1px solid var(--divider); border-radius: 3px; font: 12px/1.65 var(--sans); }
 .small-link:hover { border-color: var(--link); text-decoration: none; }
-.site-footer { border-top: 1px solid var(--divider); color: var(--muted); }
-.footer-inner { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 24px; padding-block: 22px; font: 12px/1.6 var(--sans); }
+.site-footer {
+  border-top: 1px solid var(--divider);
+  padding-block: 40px;
+  background: #101828;
+  color: #c5d4e6;
+}
+.footer-inner { text-align: center; font: 14px/1.6 var(--serif); overflow-wrap: anywhere; }
 .footer-inner p { margin: 0; }
-.footer-inner a { color: var(--muted); }
+.footer-inner a {
+  color: #f7f9fc;
+  text-decoration: underline;
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+.footer-inner a:hover { color: #7af0e6; text-decoration-thickness: 0.12em; }
+.footer-inner a:focus-visible { outline-color: #7af0e6; }
 .category-intro { max-width: 630px; margin-bottom: 39px; }
 .category-item { padding: 23px 0; border-top: 1px solid var(--divider); }
 .category-item .post-date { display: block; margin-bottom: 9px; }
@@ -155,8 +223,8 @@ h3 { margin: 0 0 9px; font-size: 17px; font-weight: 600; }
 
 @media (max-width: 540px) {
   .navigation { justify-content: center; }
-  .navigation ul { width: 100%; justify-content: space-between; gap: 10px; }
-  .navigation a { min-height: 57px; font-size: 13px; }
+  .navigation ul { width: 100%; justify-content: space-between; gap: 6px; }
+  .navigation a { min-height: 57px; font-size: 15px; }
   h1 { font-size: 31px; }
   h2 { font-size: 25px; }
   .page-heading { margin-bottom: 27px; }
@@ -172,9 +240,12 @@ h3 { margin: 0 0 9px; font-size: 17px; font-weight: 600; }
   .publication { grid-template-columns: 96px minmax(0, 1fr); gap: 16px; }
   .publication h3 { font-size: 15px; }
   .publication p { font-size: 12px; }
-  .footer-inner { flex-direction: column; gap: 5px; }
   .article-heading h1 { font-size: 28px; }
   .category-item h2 { font-size: 19px; }
+}
+
+@media (max-width: 480px) {
+  .bio-topics { grid-template-columns: minmax(0, 1fr); gap: 24px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

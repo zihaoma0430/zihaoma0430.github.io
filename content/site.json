@@ -1,19 +1,42 @@
 {
   "profile": {
     "name": "Zihao Ma",
-    "tagline": "Research · Engineering · Product",
+    "tagline": "Believe in General Computer Use Agent",
     "avatar": "assets/images/avatar.svg",
     "avatar_alt": "ZM initials; profile photo to be added",
-    "affiliation": "个人信息待补充",
-    "email": "",
-    "github": "https://github.com/zihaoma0430",
-    "scholar": "",
+    "affiliation": {
+      "unit": "School of Artificial Intelligence",
+      "place": "Beihang University"
+    },
+    "email": "#",
+    "x": "#",
+    "linkedin": "#",
+    "scholar": "#",
+    "xiaohongshu": "#",
+    "wechat": "#",
     "bio": [
-      "欢迎来到我的个人主页。这里将记录我在研究、工程与产品方面的工作与思考。",
-      "你可以通过 Research、Engineering 和 Product 了解各个方向的内容，也可以在下方阅读最新文章和查看论文。"
+      "I am a master's student at the School of Artificial Intelligence, Beihang University. Previously, I interned with the RL Infrastructure group in Meituan's LongCat foundation model team.",
+      "My research focuses on reinforcement learning (RL) post-training for multimodal agent models. I am also passionate about exploring general-purpose computer use agents.",
+      "On this blog, I will share insights and research findings from research, engineering, and product perspectives."
     ],
-    "bio_note": "个人简介、教育与工作经历待补充。",
-    "interests": []
+    "bio_note": "",
+    "interests": [
+      "Visual Agentic RL",
+      "Computer Use Agent",
+      "RL Infra"
+    ],
+    "education": [
+      {
+        "degree": "M.S., Artificial Intelligence",
+        "institution": "Beihang University (BUAA)",
+        "years": "2025-2028"
+      },
+      {
+        "degree": "B.E., Artificial Intelligence",
+        "institution": "Huazhong University of Science and Technology (HUST)",
+        "years": "2021-2025"
+      }
+    ]
   },
   "posts": [
     {

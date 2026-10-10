@@ -20,11 +20,13 @@ python3 -m http.server 8000 --bind 127.0.0.1
 
 个人信息集中在 `profile` 中：
 
-- `name`、`tagline`、`affiliation`：姓名、首页副标题、所属机构。
+- `name`、`tagline`：姓名、首页副标题。
+- `affiliation.unit`、`affiliation.place`：头像下方分两行居中显示的学院与学校英文名称。
 - `avatar`、`avatar_alt`：头像路径与替代文字。可将照片放进 `assets/images/`，再更新路径。
-- `email`、`github`、`scholar`：联系方式。填写邮箱地址后自动生成邮件链接；空值不生成链接。
+- `email`、`x`、`linkedin`、`scholar`、`xiaohongshu`、`wechat`：六个社交图标的目标地址，按此顺序排列。`#` 或空值表示占位，显示图标与待补充提示，不跳转。邮箱填写地址即可，其余填写完整的 HTTP(S) 链接，重新构建后自动启用。
 - `bio`：简介段落；`bio_note`：待补充提示，正式上线前可设为空字符串。
-- `interests`：研究兴趣列表。填写后替换简介下的 Explore 导航。
+- `interests`：简介下方 Interests 栏目的研究兴趣列表。
+- `education`：与 Interests 并排展示的教育经历，每项包含 `degree`（学位）、`institution`（学校）和 `years`（年份）。窄屏手机上自动改为上下排列。
 
 `posts` 为文章列表：`category` 选择 `Research`、`Engineering`、`Product`；`date` 使用 `YYYY-MM-DD`；`body` 中每个字符串为一个段落。首页按日期倒序展示最近八篇。可设置 `url` 直接链接外部文章。未设置 `url` 时使用本地详情页。
 
@@ -56,3 +58,5 @@ publications/             # 论文详情页
 ## 设计参考
 
 配色与学术主页排版参考 [Jiaxuan Zou 的主页](https://jiaxuanzou0714.github.io/)。采用参考站浅色背景 `#f7f9fc`、正文色 `#101828`、链接色 `#115fb3`，内容容器最大宽度为 930px。样式和页面生成代码为本项目独立实现，未使用参考站的个人照片、简介、文章或论文。
+
+所有页面共用深色、居中的版权页脚，显示构建年份、姓名、参考主页链接及 GitHub Pages 链接。页脚在 `scripts/build.py` 中统一维护。
